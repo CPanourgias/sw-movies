@@ -1,8 +1,12 @@
 function App() {
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-      <p>This is my first commit coding</p>
+    <div className='flex flex-col h-screen'>
+      <h2 className='text-center'>Star wars: a movie wiki</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti illo
+        earum laborum repellendus autem! Maxime ab delectus obcaecati ex hic
+        asperiores aliquam fugit velit eos enim! Sint placeat veritatis ad.
+      </p>
     </div>
   );
 }
