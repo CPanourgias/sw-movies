@@ -1,14 +1,13 @@
-function App() {
+import React from 'react';
+import MoviesList from './features/movies/MoviesList';
+
+const App: React.FC = () => {
   return (
-    <div className='flex flex-col h-screen'>
-      <h2 className='text-center'>Star wars: a movie wiki</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti illo
-        earum laborum repellendus autem! Maxime ab delectus obcaecati ex hic
-        asperiores aliquam fugit velit eos enim! Sint placeat veritatis ad.
-      </p>
+    <div>
+      <h1>Star Wars Movies</h1>
+      <MoviesList />
     </div>
   );
-}
+};
 
 export default App;
