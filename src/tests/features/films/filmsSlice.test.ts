@@ -1,18 +1,30 @@
-// tests/features/films/filmsSlice.test.ts
 import filmsReducer, {
   setFilms,
   filterFilms,
   selectFilm,
   sortFilms,
-} from '../../../src/features/films/filmsSlice';
+} from '../../../features/films';
+interface Film {
+  id: number;
+  title: string;
+  releaseDate: string;
+  description: string;
+  director: string;
+}
 
-const initialState = {
+interface FilmsState {
+  films: Film[];
+  filteredFilms: Film[];
+  selectedFilm: Film | null;
+}
+
+const initialState: FilmsState = {
   films: [],
   filteredFilms: [],
   selectedFilm: null,
 };
 
-const filmsData = [
+const filmsData: Film[] = [
   {
     id: 1,
     title: 'Episode IV - A New Hope',

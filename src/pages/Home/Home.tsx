@@ -16,41 +16,26 @@ import {
   selectFilteredFilms,
   selectSelectedFilm,
 } from '../../features/films/filmsSelectors';
+import { useGetFilmsQuery, Film } from '../../features/films/filmsApi';
 import styles from './Home.module.css';
-
-const filmsData = [
-  {
-    id: 1,
-    title: 'Episode IV - A New Hope',
-    releaseDate: '1977-05-25',
-    description: 'Description for A New Hope',
-    director: 'George Lucas',
-  },
-  {
-    id: 2,
-    title: 'Episode V - The Empire Strikes Back',
-    releaseDate: '1980-05-17',
-    description: 'Description for The Empire Strikes Back',
-    director: 'Irvin Kershner',
-  },
-  {
-    id: 3,
-    title: 'Episode VI - Return of the Jedi',
-    releaseDate: '1983-05-25',
-    description: 'Description for Return of the Jedi',
-    director: 'Richard Marquand',
-  },
-  // Add more films as needed
-];
+import { RootState } from '../../store';
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
-  const filteredFilms = useSelector(selectFilteredFilms);
-  const selectedFilm = useSelector(selectSelectedFilm);
+  const { data, error, isLoading } = useGetFilmsQuery();
+  const filteredFilms = useSelector((state: RootState) =>
+    selectFilteredFilms(state),
+  );
+  const selectedFilm = useSelector((state: RootState) =>
+    selectSelectedFilm(state),
+  );
 
   useEffect(() => {
-    dispatch(setFilms(filmsData));
-  }, [dispatch]);
+    if (data) {
+      const filmsData: Film[] = data.results;
+      dispatch(setFilms(filmsData));
+    }
+  }, [data, dispatch]);
 
   const handleSearch = (query: string) => {
     dispatch(filterFilms(query));
@@ -59,6 +44,14 @@ const Home: React.FC = () => {
   const handleSortChange = (sortKey: string) => {
     dispatch(sortFilms(sortKey));
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading films.</div>;
+  }
 
   return (
     <div className={styles.home}>

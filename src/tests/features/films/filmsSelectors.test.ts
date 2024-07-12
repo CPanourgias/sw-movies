@@ -6,7 +6,15 @@ import {
   selectSelectedFilm,
 } from '../../../src/features/films/filmsSelectors';
 
-const filmsData = [
+interface Film {
+  id: number;
+  title: string;
+  releaseDate: string;
+  description: string;
+  director: string;
+}
+
+const filmsData: Film[] = [
   {
     id: 1,
     title: 'Episode IV - A New Hope',

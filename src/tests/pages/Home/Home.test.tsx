@@ -1,9 +1,12 @@
+// tests/pages/Home/Home.test.tsx
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import Home from '../../../src/pages/Home/Home';
 import { setFilms } from '../../../src/features/films/filmsSlice';
+import { filmsApi } from '../../../src/features/films/filmsApi';
 
 const mockStore = configureStore([]);
 const store = mockStore({
@@ -11,6 +14,9 @@ const store = mockStore({
     films: [],
     filteredFilms: [],
     selectedFilm: null,
+  },
+  [filmsApi.reducerPath]: {
+    queries: {},
   },
 });
 

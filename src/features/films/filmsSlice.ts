@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Film {
-  id: number;
-  title: string;
-  releaseDate: string;
-  description: string;
-  director: string;
-}
+import { Film } from './filmsApi';
 
 interface FilmsState {
   films: Film[];
@@ -44,8 +37,8 @@ const filmsSlice = createSlice({
           return a.title.localeCompare(b.title);
         } else if (sortKey === 'releaseDate') {
           return (
-            new Date(a.releaseDate).getTime() -
-            new Date(b.releaseDate).getTime()
+            new Date(a.release_date).getTime() -
+            new Date(b.release_date).getTime()
           );
         }
         return 0;

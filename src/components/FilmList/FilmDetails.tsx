@@ -2,13 +2,7 @@
 import React from 'react';
 import styles from './FilmDetails.module.css';
 
-interface Film {
-  id: number;
-  title: string;
-  releaseDate: string;
-  description: string;
-  director: string;
-}
+import type { Film } from 'features/films/filmsApi';
 
 interface FilmDetailsProps {
   film: Film | null;
@@ -28,12 +22,12 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ film }) => {
       <h2>{film.title}</h2>
       <p>
         <strong>Release Date:</strong>{' '}
-        {new Date(film.releaseDate).toDateString()}
+        {new Date(film.release_date).toDateString()}
       </p>
       <p>
         <strong>Director:</strong> {film.director}
       </p>
-      <p>{film.description}</p>
+      <p>{film.opening_crawl}</p>
     </div>
   );
 };
