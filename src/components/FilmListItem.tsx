@@ -1,4 +1,4 @@
-import type { Film } from 'types';
+import type { Film } from '../types';
 
 interface FilmListItemProps {
   film: Film;

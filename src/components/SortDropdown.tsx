@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import type { RootState } from '../app/store';
 
 interface SortDropdownProps {
   onSortChange: (sortKey: string) => void;

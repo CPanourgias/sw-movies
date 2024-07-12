@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAppDispatch, useTypedSelector } from '../app/store';
+import { RootState, useAppDispatch, useTypedSelector } from '../app/store';
 import {
   Header,
   FilmList,
@@ -22,8 +22,12 @@ import type { Film } from '../types';
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const { data, error, isLoading } = useGetFilmsQuery();
-  const filteredFilms = useTypedSelector((state) => state.films.filteredFilms);
-  const selectedFilm = useTypedSelector((state) => state.films.selectedFilm);
+  const filteredFilms = useTypedSelector(
+    (state: RootState) => state.films.filteredFilms,
+  );
+  const selectedFilm = useTypedSelector(
+    (state: RootState) => state.films.selectedFilm,
+  );
 
   const [selectedFilmId, setSelectedFilmId] = useState<number | null>(null);
 

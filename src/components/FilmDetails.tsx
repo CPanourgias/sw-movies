@@ -1,8 +1,8 @@
-import type { Film, FilmDetails } from 'features/films/filmsApi';
+import type { Film, FilmDetails } from '../types';
 
 interface FilmDetailsProps {
   film: Film | null;
-  details: FilmDetails | null; // Change this to the appropriate type
+  details: FilmDetails | undefined;
 }
 
 const FilmSideBar: React.FC<FilmDetailsProps> = ({ film, details }) => {

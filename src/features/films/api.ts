@@ -5,6 +5,8 @@ interface FilmsResponse {
   results: Film[];
 }
 
+const EPISODES = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+
 export const filmsApi = createApi({
   reducerPath: 'filmsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.dev/api/' }),
@@ -22,7 +24,7 @@ export const filmsApi = createApi({
     }),
     getFilmDetails: builder.query<FilmDetails, number>({
       query: (episode_id) =>
-        `https://www.omdbapi.com/?apikey=b9a5e69d&t=star+wars+episode+${episode_id}`,
+        `https://www.omdbapi.com/?apikey=b9a5e69d&t=star+wars+episode+${EPISODES[episode_id - 1]}`,
       providesTags: (_result, _error, episode_id) => [
         { type: 'FilmDetails', id: episode_id },
       ],
