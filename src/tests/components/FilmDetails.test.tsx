@@ -1,7 +1,7 @@
 import { test, expect } from 'vitest';
 import { render } from '@testing-library/react';
 
-import FilmDetails from '../../components/FilmList/FilmDetails';
+import FilmDetails from '../../components/FilmDetails';
 
 const film = {
   id: 1,

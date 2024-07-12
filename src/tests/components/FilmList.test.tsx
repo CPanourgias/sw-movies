@@ -1,7 +1,7 @@
 // tests/components/FilmList.test.tsx
 import { render } from '@testing-library/react';
 
-import FilmList from 'components/FilmList/FilmList';
+import FilmList from 'components/FilmList';
 
 const films = [
   { id: 1, title: 'Episode IV - A New Hope', releaseDate: '1977-05-25' },

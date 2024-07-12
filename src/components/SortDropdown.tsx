@@ -1,8 +1,5 @@
-// src/components/SortDropdown/SortDropdown.tsx
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import styles from './SortDropdown.module.css';
 
 interface SortDropdownProps {
   onSortChange: (sortKey: string) => void;
@@ -16,8 +13,12 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ onSortChange }) => {
   };
 
   return (
-    <div className={styles.sortDropdown}>
-      <select value={sortKey} onChange={handleChange}>
+    <div className="m-4">
+      <select
+        value={sortKey}
+        onChange={handleChange}
+        className="p-2 text-base border border-solid border-[#ccc] rounded-lg"
+      >
         <option value="title">Title</option>
         <option value="releaseDate">Release Date</option>
       </select>

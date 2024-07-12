@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 export interface Film {
   title: string;
@@ -49,9 +49,16 @@ interface FilmsResponse {
   results: Film[];
 }
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://swapi.dev/api/',
+});
+
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 });
+
 export const filmsApi = createApi({
   reducerPath: 'filmsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.dev/api/' }),
+  baseQuery: baseQueryWithRetry,
+  tagTypes: ['Films'],
   endpoints: (builder) => ({
     getFilms: builder.query<FilmsResponse, void>({
       query: () => 'films/?format=json',

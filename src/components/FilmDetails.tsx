@@ -1,6 +1,3 @@
-// src/components/FilmDetails/FilmDetails.tsx
-import React from 'react';
-
 import type { Film, FilmDetails } from 'features/films/filmsApi';
 
 interface FilmDetailsProps {
@@ -8,7 +5,7 @@ interface FilmDetailsProps {
   details: FilmDetails | null; // Change this to the appropriate type
 }
 
-const FilmDetails: React.FC<FilmDetailsProps> = ({ film, details }) => {
+const FilmSideBar: React.FC<FilmDetailsProps> = ({ film, details }) => {
   if (!film) {
     return (
       <div className="p-4 border-l border-solid border-white">
@@ -49,4 +46,4 @@ const FilmDetails: React.FC<FilmDetailsProps> = ({ film, details }) => {
   );
 };
 
-export default FilmDetails;
+export default FilmSideBar;

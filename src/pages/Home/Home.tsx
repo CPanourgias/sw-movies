@@ -1,11 +1,13 @@
 // src/pages/Home/Home.tsx
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Header from '../../components/Header/Header';
-import FilmList from '../../components/FilmList/FilmList';
-import FilmDetails from '../../components/FilmList/FilmDetails';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import SortDropdown from '../../components/SortDropdown/SortDropdown';
+import { useAppDispatch, useTypedSelector } from '../../store';
+import {
+  FilmList,
+  FilmDetails,
+  SearchBar,
+  SortDropdown,
+  Header,
+} from '../../components';
 import {
   setFilms,
   filterFilms,
@@ -13,30 +15,19 @@ import {
   sortFilms,
   fetchFilmDetails,
 } from '../../features/films/filmsSlice';
-import {
-  selectFilteredFilms,
-  selectSelectedFilm,
-  selectFilmDetails,
-  selectLoadingFilmDetails,
-} from '../../features/films/filmsSelectors';
 import { useGetFilmsQuery, Film } from '../../features/films/filmsApi';
 import styles from './Home.module.css';
-import { RootState } from '../../store';
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { data, error, isLoading } = useGetFilmsQuery();
-  const filteredFilms = useSelector((state: RootState) =>
-    selectFilteredFilms(state),
+  const filteredFilms = useTypedSelector((state) => state.films.filteredFilms);
+  const selectedFilm = useTypedSelector((state) => state.films.selectedFilm);
+  const selectedFilmDetails = useTypedSelector(
+    (state) => state.films.selectedFilmDetails,
   );
-  const selectedFilm = useSelector((state: RootState) =>
-    selectSelectedFilm(state),
-  );
-  const selectedFilmDetails = useSelector((state: RootState) =>
-    selectFilmDetails(state),
-  );
-  const loadingFilmDetails = useSelector((state: RootState) =>
-    selectLoadingFilmDetails(state),
+  const loadingFilmDetails = useTypedSelector(
+    (state) => state.films.loadingFilmDetails,
   );
 
   useEffect(() => {

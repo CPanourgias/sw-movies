@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import styles from './SearchBar.module.css';
+import { useState } from 'react';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -15,12 +14,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className={styles.searchBar}>
+    <div className="m-4">
       <input
         type="text"
         value={query}
         onChange={handleChange}
         placeholder="Search films..."
+        className="w-full p-2 text-base border border-solid border-[#ccc] rounded-lg"
       />
     </div>
   );
