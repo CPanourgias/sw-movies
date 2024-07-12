@@ -31,7 +31,7 @@ const filmsSlice = createSlice({
     filterFilms(state, action: PayloadAction<string>) {
       const query = action.payload.toLowerCase();
       state.filteredFilms = state.films.filter((film) =>
-        film.title.toLowerCase().includes(query)
+        film.title.toLowerCase().includes(query),
       );
     },
     selectFilm(state, action: PayloadAction<Film | null>) {

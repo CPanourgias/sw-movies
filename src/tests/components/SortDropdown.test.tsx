@@ -5,7 +5,7 @@ import SortDropdown from 'components/SortDropdown/SortDropdown';
 test('renders SortDropdown component and performs sort change', () => {
   const handleSortChange = jest.fn();
   const { getByRole } = render(
-    <SortDropdown onSortChange={handleSortChange} />
+    <SortDropdown onSortChange={handleSortChange} />,
   );
   const select = getByRole('combobox');
 

@@ -16,14 +16,23 @@ interface FilmDetailsProps {
 
 const FilmDetails: React.FC<FilmDetailsProps> = ({ film }) => {
   if (!film) {
-    return <div className={styles.filmDetails}>Select a film to see the details.</div>;
+    return (
+      <div className={styles.filmDetails}>
+        Select a film to see the details.
+      </div>
+    );
   }
 
   return (
     <div className={styles.filmDetails}>
       <h2>{film.title}</h2>
-      <p><strong>Release Date:</strong> {new Date(film.releaseDate).toDateString()}</p>
-      <p><strong>Director:</strong> {film.director}</p>
+      <p>
+        <strong>Release Date:</strong>{' '}
+        {new Date(film.releaseDate).toDateString()}
+      </p>
+      <p>
+        <strong>Director:</strong> {film.director}
+      </p>
       <p>{film.description}</p>
     </div>
   );

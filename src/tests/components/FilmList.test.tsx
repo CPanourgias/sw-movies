@@ -14,7 +14,7 @@ const films = [
 
 test('renders FilmList component', () => {
   const { getByText } = render(
-    <FilmList films={films} onFilmSelect={() => {}} />
+    <FilmList films={films} onFilmSelect={() => {}} />,
   );
   expect(getByText('Episode IV - A New Hope')).toBeInTheDocument();
   expect(getByText('Episode V - The Empire Strikes Back')).toBeInTheDocument();

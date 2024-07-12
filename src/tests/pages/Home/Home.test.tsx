@@ -20,7 +20,7 @@ describe('Home', () => {
     render(
       <Provider store={store}>
         <Home />
-      </Provider>
+      </Provider>,
     );
   });
 
@@ -43,7 +43,7 @@ describe('Home', () => {
 
   test('renders FilmList and FilmDetails components', () => {
     expect(
-      screen.getByText('Select a film to see the details.')
+      screen.getByText('Select a film to see the details.'),
     ).toBeInTheDocument();
   });
 

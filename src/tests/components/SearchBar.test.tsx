@@ -5,7 +5,7 @@ import SearchBar from 'components/SearchBar/SearchBar';
 test('renders SearchBar component and performs search', () => {
   const handleSearch = jest.fn();
   const { getByPlaceholderText } = render(
-    <SearchBar onSearch={handleSearch} />
+    <SearchBar onSearch={handleSearch} />,
   );
   const input = getByPlaceholderText('Search films...');
 

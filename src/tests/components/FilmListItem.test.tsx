@@ -12,7 +12,7 @@ const film = {
 
 test('renders FilmListItem component', () => {
   const { getByText } = render(
-    <FilmListItem film={film} onFilmSelect={() => {}} />
+    <FilmListItem film={film} onFilmSelect={() => {}} />,
   );
   expect(getByText('Episode IV - A New Hope (1977)')).toBeInTheDocument();
 });

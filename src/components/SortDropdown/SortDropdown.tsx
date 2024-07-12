@@ -13,8 +13,8 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ onSortChange }) => {
   return (
     <div className={styles.sortDropdown}>
       <select onChange={handleChange}>
-        <option value='title'>Title</option>
-        <option value='releaseDate'>Release Date</option>
+        <option value="title">Title</option>
+        <option value="releaseDate">Release Date</option>
       </select>
     </div>
   );

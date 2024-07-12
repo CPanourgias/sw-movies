@@ -17,10 +17,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   return (
     <div className={styles.searchBar}>
       <input
-        type='text'
+        type="text"
         value={query}
         onChange={handleChange}
-        placeholder='Search films...'
+        placeholder="Search films..."
       />
     </div>
   );
