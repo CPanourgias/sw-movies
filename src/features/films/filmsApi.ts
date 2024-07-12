@@ -63,7 +63,11 @@ export const filmsApi = createApi({
     getFilms: builder.query<FilmsResponse, void>({
       query: () => 'films/?format=json',
     }),
+    getFilmDetails: builder.query<FilmDetails, void>({
+      query: (episode_id) =>
+        `https://www.omdbapi.com/?apikey=b9a5e69d&t=star+wars+episode+${episode_id}`,
+    }),
   }),
 });
 
-export const { useGetFilmsQuery } = filmsApi;
+export const { useGetFilmsQuery, useGetFilmDetailsQuery } = filmsApi;
