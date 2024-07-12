@@ -1,0 +1,23 @@
+/* src/pages/Home/Home.module.css */
+.home {
+  padding: 1rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: flex;
+}
+
+.filmList {
+  flex: 1;
+}
+
+.filmDetails {
+  flex: 2;
+  padding-left: 1rem;
+}
