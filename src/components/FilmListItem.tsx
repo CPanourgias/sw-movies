@@ -1,4 +1,5 @@
-import type { Film } from 'features/films/filmsApi';
+import type { Film } from 'types';
+
 interface FilmListItemProps {
   film: Film;
   onFilmSelect: (film: Film) => void;

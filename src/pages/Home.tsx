@@ -1,34 +1,36 @@
-// src/pages/Home/Home.tsx
-import React, { useEffect } from 'react';
-import { useAppDispatch, useTypedSelector } from '../../store';
+import { useState, useEffect } from 'react';
+import { useAppDispatch, useTypedSelector } from '../app/store';
 import {
+  Header,
   FilmList,
   FilmDetails,
   SearchBar,
   SortDropdown,
-  Header,
-} from '../../components';
+} from '../components';
 import {
   setFilms,
   filterFilms,
   selectFilm,
   sortFilms,
-  fetchFilmDetails,
-} from '../../features/films/filmsSlice';
-import { useGetFilmsQuery, Film } from '../../features/films/filmsApi';
-import styles from './Home.module.css';
+} from '../features/films/slice';
+import {
+  useGetFilmsQuery,
+  useGetFilmDetailsQuery,
+} from '../features/films/api';
+import type { Film } from '../types';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const { data, error, isLoading } = useGetFilmsQuery();
   const filteredFilms = useTypedSelector((state) => state.films.filteredFilms);
   const selectedFilm = useTypedSelector((state) => state.films.selectedFilm);
-  const selectedFilmDetails = useTypedSelector(
-    (state) => state.films.selectedFilmDetails,
-  );
-  const loadingFilmDetails = useTypedSelector(
-    (state) => state.films.loadingFilmDetails,
-  );
+
+  const [selectedFilmId, setSelectedFilmId] = useState<number | null>(null);
+
+  const { data: selectedFilmDetails, isLoading: loadingFilmDetails } =
+    useGetFilmDetailsQuery(selectedFilmId ?? 0, {
+      skip: selectedFilmId === null,
+    });
 
   useEffect(() => {
     if (data) {
@@ -47,9 +49,7 @@ const Home: React.FC = () => {
 
   const handleFilmSelect = (film: Film) => {
     dispatch(selectFilm(film));
-    if (film.episode_id) {
-      dispatch(fetchFilmDetails(film.episode_id));
-    }
+    setSelectedFilmId(film.episode_id);
   };
 
   if (isLoading) {
@@ -61,17 +61,17 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className={styles.home}>
+    <div className="p-4">
       <Header />
-      <div className={styles.controls}>
+      <div className="flex items-center mb-4">
         <SearchBar onSearch={handleSearch} />
         <SortDropdown onSortChange={handleSortChange} />
       </div>
-      <div className={styles.content}>
-        <div className={styles.filmList}>
+      <div className="flex">
+        <div className="flex-1">
           <FilmList films={filteredFilms} onFilmSelect={handleFilmSelect} />
         </div>
-        <div className={styles.filmDetails}>
+        <div className="flex-[2] pl-4">
           {loadingFilmDetails ? (
             <div>Loading details...</div>
           ) : (

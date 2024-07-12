@@ -1,51 +1,7 @@
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Define the Film and FilmDetails interfaces
-export interface Film {
-  title: string;
-  episode_id: number;
-  opening_crawl: string;
-  director: string;
-  producer: string;
-  release_date: string;
-  characters: string[];
-  planets: string[];
-  starships: string[];
-  vehicles: string[];
-  species: string[];
-  created: string;
-  edited: string;
-  url: string;
-}
-
-interface FilmDetails {
-  Title: string;
-  Year: string;
-  Rated: string;
-  Released: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Writer: string;
-  Actors: string;
-  Plot: string;
-  Language: string;
-  Country: string;
-  Awards: string;
-  Poster: string;
-  Ratings: { Source: string; Value: string }[];
-  Metascore: string;
-  imdbRating: string;
-  imdbVotes: string;
-  imdbID: string;
-  Type: string;
-  DVD: string;
-  BoxOffice: string;
-  Production: string;
-  Website: string;
-  Response: string;
-}
+import { Film, FilmDetails } from 'types';
 
 interface FilmsState {
   films: Film[];
@@ -67,7 +23,6 @@ const initialState: FilmsState = {
   sortKey: 'releaseDate',
 };
 
-// Create an async thunk for fetching film details
 export const fetchFilmDetails = createAsyncThunk(
   'films/fetchFilmDetails',
   async (episode_id: number) => {
@@ -78,7 +33,6 @@ export const fetchFilmDetails = createAsyncThunk(
   },
 );
 
-// Create a slice for films
 const filmsSlice = createSlice({
   name: 'films',
   initialState,
@@ -141,3 +95,4 @@ const filmsSlice = createSlice({
 
 export const { setFilms, filterFilms, selectFilm, sortFilms } =
   filmsSlice.actions;
+export default filmsSlice.reducer;
