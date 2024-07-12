@@ -1,17 +1,39 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Film } from './filmsApi';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { FilmDetails, Film } from './filmsApi';
+import axios from 'axios';
 
 interface FilmsState {
   films: Film[];
   filteredFilms: Film[];
   selectedFilm: Film | null;
+  selectedFilmDetails: FilmDetails | null;
+  loadingFilmDetails: boolean;
+  filmDetailsCache: Record<string, FilmDetails>;
+  sortKey: string;
 }
 
 const initialState: FilmsState = {
   films: [],
   filteredFilms: [],
   selectedFilm: null,
+  selectedFilmDetails: null,
+  loadingFilmDetails: false,
+  filmDetailsCache: {},
+  sortKey: 'releaseDate',
 };
+
+const EPISODES = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+
+export const fetchFilmDetails = createAsyncThunk(
+  'films/fetchFilmDetails',
+  async (episode_id: number) => {
+    console.log(episode_id);
+    const response = await axios.get(
+      `https://www.omdbapi.com/?apikey=b9a5e69d&t=star+wars+episode+${EPISODES[episode_id - 1]}`,
+    );
+    return response.data;
+  },
+);
 
 const filmsSlice = createSlice({
   name: 'films',
@@ -26,16 +48,10 @@ const filmsSlice = createSlice({
       state.filteredFilms = state.films.filter((film) =>
         film.title.toLowerCase().includes(query),
       );
-    },
-    selectFilm(state, action: PayloadAction<Film | null>) {
-      state.selectedFilm = action.payload;
-    },
-    sortFilms(state, action: PayloadAction<string>) {
-      const sortKey = action.payload;
-      state.filteredFilms = [...state.filteredFilms].sort((a, b) => {
-        if (sortKey === 'title') {
+      state.filteredFilms.sort((a, b) => {
+        if (state.sortKey === 'title') {
           return a.title.localeCompare(b.title);
-        } else if (sortKey === 'releaseDate') {
+        } else if (state.sortKey === 'releaseDate') {
           return (
             new Date(a.release_date).getTime() -
             new Date(b.release_date).getTime()
@@ -44,6 +60,38 @@ const filmsSlice = createSlice({
         return 0;
       });
     },
+    selectFilm(state, action: PayloadAction<Film | null>) {
+      state.selectedFilm = action.payload;
+      state.selectedFilmDetails = null;
+    },
+    sortFilms(state, action: PayloadAction<string>) {
+      state.sortKey = action.payload;
+      state.filteredFilms.sort((a, b) => {
+        if (state.sortKey === 'title') {
+          return a.title.localeCompare(b.title);
+        } else if (state.sortKey === 'releaseDate') {
+          return (
+            new Date(a.release_date).getTime() -
+            new Date(b.release_date).getTime()
+          );
+        }
+        return 0;
+      });
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchFilmDetails.pending, (state) => {
+      state.loadingFilmDetails = true;
+    });
+    builder.addCase(fetchFilmDetails.fulfilled, (state, action) => {
+      const episode_id = state.selectedFilm?.episode_id ?? 0;
+      state.filmDetailsCache[episode_id] = action.payload;
+      state.selectedFilmDetails = action.payload;
+      state.loadingFilmDetails = false;
+    });
+    builder.addCase(fetchFilmDetails.rejected, (state) => {
+      state.loadingFilmDetails = false;
+    });
   },
 });
 

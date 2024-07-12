@@ -11,10 +11,13 @@ import {
   filterFilms,
   selectFilm,
   sortFilms,
+  fetchFilmDetails,
 } from '../../features/films/filmsSlice';
 import {
   selectFilteredFilms,
   selectSelectedFilm,
+  selectFilmDetails,
+  selectLoadingFilmDetails,
 } from '../../features/films/filmsSelectors';
 import { useGetFilmsQuery, Film } from '../../features/films/filmsApi';
 import styles from './Home.module.css';
@@ -28,6 +31,12 @@ const Home: React.FC = () => {
   );
   const selectedFilm = useSelector((state: RootState) =>
     selectSelectedFilm(state),
+  );
+  const selectedFilmDetails = useSelector((state: RootState) =>
+    selectFilmDetails(state),
+  );
+  const loadingFilmDetails = useSelector((state: RootState) =>
+    selectLoadingFilmDetails(state),
   );
 
   useEffect(() => {
@@ -43,6 +52,13 @@ const Home: React.FC = () => {
 
   const handleSortChange = (sortKey: string) => {
     dispatch(sortFilms(sortKey));
+  };
+
+  const handleFilmSelect = (film: Film) => {
+    dispatch(selectFilm(film));
+    if (film.episode_id) {
+      dispatch(fetchFilmDetails(film.episode_id));
+    }
   };
 
   if (isLoading) {
@@ -62,13 +78,14 @@ const Home: React.FC = () => {
       </div>
       <div className={styles.content}>
         <div className={styles.filmList}>
-          <FilmList
-            films={filteredFilms}
-            onFilmSelect={(film) => dispatch(selectFilm(film))}
-          />
+          <FilmList films={filteredFilms} onFilmSelect={handleFilmSelect} />
         </div>
         <div className={styles.filmDetails}>
-          <FilmDetails film={selectedFilm} />
+          {loadingFilmDetails ? (
+            <div>Loading details...</div>
+          ) : (
+            <FilmDetails film={selectedFilm} details={selectedFilmDetails} />
+          )}
         </div>
       </div>
     </div>

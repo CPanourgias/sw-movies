@@ -1,50 +1,69 @@
-import filmsReducer, {
-  setFilms,
-  filterFilms,
-  selectFilm,
-  sortFilms,
-} from '../../../features/films';
-interface Film {
-  id: number;
-  title: string;
-  releaseDate: string;
-  description: string;
-  director: string;
-}
+// tests/features/films/filmsSlice.test.ts
+import filmsReducer, { setFilms, filterFilms, selectFilm, sortFilms } from '../../../src/features/films/filmsSlice';
+import { Film } from '../../../src/features/films/filmsApi';
 
 interface FilmsState {
   films: Film[];
   filteredFilms: Film[];
   selectedFilm: Film | null;
+  sortKey: string;
 }
 
 const initialState: FilmsState = {
   films: [],
   filteredFilms: [],
   selectedFilm: null,
+  sortKey: 'releaseDate',
 };
 
 const filmsData: Film[] = [
-  {
-    id: 1,
-    title: 'Episode IV - A New Hope',
-    releaseDate: '1977-05-25',
-    description: 'Description for A New Hope',
-    director: 'George Lucas',
+  { 
+    title: 'Episode IV - A New Hope', 
+    episode_id: 1, 
+    opening_crawl: '...', 
+    director: 'George Lucas', 
+    producer: 'Gary Kurtz, Rick McCallum',
+    release_date: '1977-05-25',
+    characters: [],
+    planets: [],
+    starships: [],
+    vehicles: [],
+    species: [],
+    created: '',
+    edited: '',
+    url: ''
   },
-  {
-    id: 2,
-    title: 'Episode V - The Empire Strikes Back',
-    releaseDate: '1980-05-17',
-    description: 'Description for The Empire Strikes Back',
-    director: 'Irvin Kershner',
+  { 
+    title: 'Episode V - The Empire Strikes Back', 
+    episode_id: 2, 
+    opening_crawl: '...', 
+    director: 'Irvin Kershner', 
+    producer: 'Gary Kurtz, Rick McCallum',
+    release_date: '1980-05-17',
+    characters: [],
+    planets: [],
+    starships: [],
+    vehicles: [],
+    species: [],
+    created: '',
+    edited: '',
+    url: ''
   },
-  {
-    id: 3,
-    title: 'Episode VI - Return of the Jedi',
-    releaseDate: '1983-05-25',
-    description: 'Description for Return of the Jedi',
-    director: 'Richard Marquand',
+  { 
+    title: 'Episode VI - Return of the Jedi', 
+    episode_id: 3, 
+    opening_crawl: '...', 
+    director: 'Richard Marquand', 
+    producer: 'Howard G. Kazanjian, George Lucas, Rick McCallum',
+    release_date: '1983-05-25',
+    characters: [],
+    planets: [],
+    starships: [],
+    vehicles: [],
+    species: [],
+    created: '',
+    edited: '',
+    url: ''
   },
 ];
 
@@ -60,11 +79,7 @@ describe('filmsSlice', () => {
   });
 
   test('should handle filterFilms', () => {
-    const stateWithFilms = {
-      ...initialState,
-      films: filmsData,
-      filteredFilms: filmsData,
-    };
+    const stateWithFilms = { ...initialState, films: filmsData, filteredFilms: filmsData };
     const actual = filmsReducer(stateWithFilms, filterFilms('A New Hope'));
     expect(actual.filteredFilms).toEqual([filmsData[0]]);
   });
@@ -75,22 +90,9 @@ describe('filmsSlice', () => {
   });
 
   test('should handle sortFilms by title', () => {
-    const stateWithFilms = {
-      ...initialState,
-      films: filmsData,
-      filteredFilms: filmsData,
-    };
+    const stateWithFilms = { ...initialState, films: filmsData, filteredFilms: filmsData };
     const actual = filmsReducer(stateWithFilms, sortFilms('title'));
     expect(actual.filteredFilms[0].title).toEqual('Episode IV - A New Hope');
   });
 
-  test('should handle sortFilms by releaseDate', () => {
-    const stateWithFilms = {
-      ...initialState,
-      films: filmsData,
-      filteredFilms: filmsData,
-    };
-    const actual = filmsReducer(stateWithFilms, sortFilms('releaseDate'));
-    expect(actual.filteredFilms[0].releaseDate).toEqual('1977-05-25');
-  });
-});
+  test('should handle

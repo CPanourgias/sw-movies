@@ -1,6 +1,4 @@
-import React from 'react';
 import FilmListItem from './FilmListItem';
-import styles from './FilmList.module.css';
 import type { Film } from 'features/films/filmsApi';
 
 interface FilmListProps {
@@ -10,7 +8,7 @@ interface FilmListProps {
 
 const FilmList: React.FC<FilmListProps> = ({ films, onFilmSelect }) => {
   return (
-    <div className={styles.filmList}>
+    <div className="flex flex-col w-full">
       {films.map((film) => (
         <FilmListItem
           key={film.episode_id}
