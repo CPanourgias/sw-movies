@@ -1,11 +1,10 @@
-import React from 'react';
-import MoviesList from './features/movies/MoviesList';
-
 const App: React.FC = () => {
   return (
-    <div>
-      <h1>Star Wars Movies</h1>
-      <MoviesList />
+    <div
+      data-testid='hello-message'
+      className='flex flex-col border-2 items-center w-full'
+    >
+      Hello
     </div>
   );
 };

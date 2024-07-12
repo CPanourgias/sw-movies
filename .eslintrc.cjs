@@ -15,4 +15,11 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
-}
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+      },
+    },
+  },
+};
