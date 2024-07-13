@@ -16,12 +16,12 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ onSortChange }) => {
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="sort-select-label">Sort</InputLabel>
+      <InputLabel id="sort-select-label">Sort by</InputLabel>
       <Select
         labelId="sort-select-label"
         id="sort-select"
         value={sortKey}
-        label="Age"
+        label="Sort by"
         onChange={handleChange}
       >
         <MenuItem value="title">Title</MenuItem>
