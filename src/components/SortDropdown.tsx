@@ -2,16 +2,15 @@ import { useSelector } from 'react-redux';
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 
-import type { RootState } from '../app/store';
-interface SortDropdownProps {
-  onSortChange: (sortKey: string) => void;
-}
+import { useAppDispatch, type RootState } from '../app/store';
+import { sortFilms } from '../features/films/slice';
 
-const SortDropdown: React.FC<SortDropdownProps> = ({ onSortChange }) => {
+const SortDropdown: React.FC = () => {
+  const dispatch = useAppDispatch();
   const sortKey = useSelector((state: RootState) => state.films.sortKey);
 
   const handleChange = (e: SelectChangeEvent) => {
-    onSortChange(e.target.value);
+    dispatch(sortFilms(e.target.value));
   };
 
   return (

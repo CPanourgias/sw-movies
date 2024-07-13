@@ -8,7 +8,7 @@ import {
   SearchBar,
   SortDropdown,
 } from '../components';
-import { setFilms, sortFilms } from '../features/films/slice';
+import { setFilms } from '../features/films/slice';
 import { useGetFilmsQuery } from '../features/films/api';
 import type { Film } from '../types';
 import { isNull } from 'lodash';
@@ -32,10 +32,6 @@ const Home: React.FC = () => {
       dispatch(setFilms(filmsData));
     }
   }, [data, dispatch]);
-
-  const handleSortChange = (sortKey: string) => {
-    dispatch(sortFilms(sortKey));
-  };
 
   const renderFilms = () => {
     if (isLoading) {
@@ -80,7 +76,7 @@ const Home: React.FC = () => {
           <SearchBar />
         </Grid>
         <Grid item xs={12} md={3}>
-          <SortDropdown onSortChange={handleSortChange} />
+          <SortDropdown />
         </Grid>
       </Grid>
       <Grid container spacing={4}>

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Divider, List, ListItemText } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 
@@ -9,7 +10,7 @@ interface FilmListProps {
   films: Film[];
 }
 
-const FilmList: React.FC<FilmListProps> = ({ films }) => {
+const FilmList: React.FC<FilmListProps> = memo(({ films }) => {
   const dispatch = useAppDispatch();
 
   const selectedFilm = useTypedSelector(
@@ -44,6 +45,6 @@ const FilmList: React.FC<FilmListProps> = ({ films }) => {
       })}
     </List>
   );
-};
+});
 
 export default FilmList;

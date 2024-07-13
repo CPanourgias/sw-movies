@@ -32,4 +32,10 @@ export const filmsApi = createApi({
   }),
 });
 
-export const { useGetFilmsQuery, useGetFilmDetailsQuery } = filmsApi;
+export const useGetFilmsQuery = filmsApi.endpoints.getFilms
+  .useQuery as () => ReturnType<typeof filmsApi.endpoints.getFilms.useQuery>;
+export const useGetFilmDetailsQuery = filmsApi.endpoints.getFilmDetails
+  .useQuery as (
+  episode_id: number,
+  options: unknown,
+) => ReturnType<typeof filmsApi.endpoints.getFilmDetails.useQuery>;
