@@ -1,79 +1,70 @@
+// import {
+//   Box,
+//   Card,
+//   CardContent,
+//   Typography,
+//   CardHeader,
+//   Chip,
+//   Avatar,
+// } from '@mui/material';
 import {
   Box,
   Card,
   CardContent,
-  Typography,
   CardHeader,
-  Chip,
-  Avatar,
+  CircularProgress,
+  Divider,
+  Typography,
 } from '@mui/material';
-import type { Film, FilmDetails } from '../types';
+
+import type { Film } from '../types';
+import { useGetFilmDetailsQuery } from '../features/films/api';
 
 interface FilmDetailsProps {
-  film: Film | null;
-  isLoadingDetails: boolean;
-  details: FilmDetails | undefined;
+  film: Film;
 }
 
-const FilmSideBar: React.FC<FilmDetailsProps> = (props) => {
-  const { film, isLoadingDetails, details } = props;
-  if (!film) {
-    return (
-      <Card>
-        <CardContent>Select a film to see the details.</CardContent>
-      </Card>
-    );
-  }
+const FilmSideBar: React.FC<FilmDetailsProps> = ({ film }) => {
+  const { data, isLoading, error } = useGetFilmDetailsQuery(
+    film.episode_id ?? 0,
+    { skip: film.episode_id === null },
+  );
 
-  if (!details) {
+  const renderCardContent = () => {
+    if (isLoading) {
+      return (
+        <>
+          <CircularProgress />
+          <Typography variant="body1">Details are loading</Typography>
+        </>
+      );
+    }
+
+    if (error || !data) {
+      return (
+        <Typography variant="body1">
+          There seems to be an error. Try selecting another film or refresh the
+          page
+        </Typography>
+      );
+    }
+
     return (
-      <Card>
-        <CardContent>
-          No details found! Select a different film, or refresh the page.
-        </CardContent>
-      </Card>
+      <Box display="flex" alignItems="center">
+        <div>
+          <img className="shadow-lg h-full" src={data.Poster} alt="new" />
+          <Typography>{film.opening_crawl}</Typography>
+        </div>
+      </Box>
     );
-  }
+  };
 
   return (
-    <Card className="h-full">
+    <Card className="h-full text-center">
       <CardHeader title={film.title} />
-      <CardContent className="flex">
-        <img className="shadow-lg h-full" src={details.Poster} alt="new" />
-        <Box className="flex flex-col gap-4 p-2">
-          <Typography variant="body1">{film.opening_crawl}</Typography>
-          <Typography variant="body1">
-            <b>Director:</b> {film.director}
-          </Typography>
-          <Typography variant="body1">
-            <b>Box Office:</b> {details.BoxOffice}
-          </Typography>
-          <Typography variant="body1">
-            <b>Runtime:</b> {details.Runtime}
-          </Typography>
-          <div>
-            <Typography variant="body1">Ratings</Typography>
-            <div className="flex gap-4">
-              <Chip
-                avatar={<Avatar alt="Natacha" src="/icons/imdb.svg" />}
-                label={details.Ratings[0].Value}
-                variant="outlined"
-              />
-              <Chip
-                avatar={
-                  <Avatar alt="Natacha" src="/icons/rotten-tomatoes.svg" />
-                }
-                label={details.Ratings[1].Value}
-                variant="outlined"
-              />
-              <Chip
-                avatar={<Avatar alt="Natacha" src="/icons/metascore.svg" />}
-                label={details.Ratings[2].Value}
-                variant="outlined"
-              />
-            </div>
-          </div>
-        </Box>
+      <CardContent>
+        <Divider variant="fullWidth" component="div" sx={{ marginBottom: 4 }} />
+        {renderCardContent()}
       </CardContent>
     </Card>
   );

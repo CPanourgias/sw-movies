@@ -1,24 +1,25 @@
-import { Box, TextField } from '@mui/material';
 import { useState } from 'react';
+import { Box, TextField } from '@mui/material';
 
-interface SearchBarProps {
-  onSearch: (query: string) => void;
-}
+import { filterFilms, selectFilm } from '../features/films/slice';
+import { useAppDispatch } from '../app/store';
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [query, setQuery] = useState('');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = event.target.value;
     setQuery(newQuery);
-    onSearch(newQuery);
+    dispatch(selectFilm(null));
+    dispatch(filterFilms(newQuery));
   };
 
   return (
     <Box sx={{ width: '100%' }} display="flex" flexDirection="row">
       <TextField
         value={query}
-        onChange={handleChange}
+        onChange={handleSearch}
         label="Search films..."
         variant="outlined"
         sx={{ flex: 4 }}

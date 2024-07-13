@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import { RootState, useAppDispatch, useTypedSelector } from '../app/store';
 import {
   Header,
@@ -7,35 +8,23 @@ import {
   SearchBar,
   SortDropdown,
 } from '../components';
-import {
-  setFilms,
-  filterFilms,
-  selectFilm,
-  sortFilms,
-} from '../features/films/slice';
-import {
-  useGetFilmsQuery,
-  useGetFilmDetailsQuery,
-} from '../features/films/api';
+import { setFilms, sortFilms } from '../features/films/slice';
+import { useGetFilmsQuery } from '../features/films/api';
 import type { Film } from '../types';
-import { Container } from '@mui/material';
+import { isNull } from 'lodash';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
+
   const { data, error, isLoading } = useGetFilmsQuery();
+
   const filteredFilms = useTypedSelector(
     (state: RootState) => state.films.filteredFilms,
   );
+
   const selectedFilm = useTypedSelector(
     (state: RootState) => state.films.selectedFilm,
   );
-
-  const [selectedFilmId, setSelectedFilmId] = useState<number | null>(null);
-
-  const { data: selectedFilmDetails, isLoading: loadingFilmDetails } =
-    useGetFilmDetailsQuery(selectedFilmId ?? 0, {
-      skip: selectedFilmId === null,
-    });
 
   useEffect(() => {
     if (data) {
@@ -44,47 +33,56 @@ const Home: React.FC = () => {
     }
   }, [data, dispatch]);
 
-  const handleSearch = (query: string) => {
-    dispatch(filterFilms(query));
-  };
-
   const handleSortChange = (sortKey: string) => {
     dispatch(sortFilms(sortKey));
   };
-
-  const handleFilmSelect = (film: Film) => {
-    dispatch(selectFilm(film));
-    setSelectedFilmId(film.episode_id);
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error loading films.</div>;
   }
 
+  const renderFilms = () => {
+    if (isLoading) {
+      return (
+        <Grid item xs={12}>
+          <CircularProgress />
+        </Grid>
+      );
+    }
+
+    return (
+      <>
+        <Grid item xs={12} md={6}>
+          <FilmList films={filteredFilms} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          {isNull(selectedFilm) ? (
+            <Typography variant="body1" textAlign="center">
+              Select a movie from the list to see extra details
+            </Typography>
+          ) : (
+            <FilmDetails film={selectedFilm} />
+          )}
+        </Grid>
+      </>
+    );
+  };
+
   return (
-    <Container className="h-screen p-4">
+    <>
       <Header />
-      <div className="flex items-center mb-4">
-        <SearchBar onSearch={handleSearch} />
-        <SortDropdown onSortChange={handleSortChange} />
-      </div>
-      <div className="flex gap-8">
-        <div className="flex-1">
-          <FilmList films={filteredFilms} onFilmSelect={handleFilmSelect} />
-        </div>
-        <div className="flex-[2] pl-4">
-          <FilmDetails
-            film={selectedFilm}
-            details={selectedFilmDetails}
-            isLoadingDetails={loadingFilmDetails}
-          />
-        </div>
-      </div>
-    </Container>
+      <Grid container spacing={4} className="mb-16">
+        <Grid item xs={9}>
+          <SearchBar />
+        </Grid>
+        <Grid item xs={3}>
+          <SortDropdown onSortChange={handleSortChange} />
+        </Grid>
+      </Grid>
+      <Grid container spacing={4}>
+        {renderFilms()}
+      </Grid>
+    </>
   );
 };
 

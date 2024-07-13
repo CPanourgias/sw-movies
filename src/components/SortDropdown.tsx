@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
-import type { RootState } from '../app/store';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 
+import type { RootState } from '../app/store';
 interface SortDropdownProps {
   onSortChange: (sortKey: string) => void;
 }
@@ -8,21 +10,24 @@ interface SortDropdownProps {
 const SortDropdown: React.FC<SortDropdownProps> = ({ onSortChange }) => {
   const sortKey = useSelector((state: RootState) => state.films.sortKey);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onSortChange(event.target.value);
+  const handleChange = (e: SelectChangeEvent) => {
+    onSortChange(e.target.value);
   };
 
   return (
-    <div className="m-4">
-      <select
+    <FormControl fullWidth>
+      <InputLabel id="sort-select-label">Sort</InputLabel>
+      <Select
+        labelId="sort-select-label"
+        id="sort-select"
         value={sortKey}
+        label="Age"
         onChange={handleChange}
-        className="p-2 text-base border border-solid border-[#ccc] rounded-lg"
       >
-        <option value="title">Title</option>
-        <option value="releaseDate">Release Date</option>
-      </select>
-    </div>
+        <MenuItem value="title">Title</MenuItem>
+        <MenuItem value="releaseDate">Release Date</MenuItem>
+      </Select>
+    </FormControl>
   );
 };
 

@@ -11,6 +11,41 @@ import {
 } from '../features/films/slice';
 import { Film } from '../types';
 
+const films: Film[] = [
+  {
+    title: 'A New Hope',
+    episode_id: 4,
+    release_date: '1977-05-25',
+    director: 'George Lucas',
+    opening_crawl: '',
+    producer: '',
+    characters: [],
+    planets: [],
+    starships: [],
+    vehicles: [],
+    species: [],
+    created: '',
+    edited: '',
+    url: '',
+  },
+  {
+    title: 'The Empire Strikes Back',
+    episode_id: 5,
+    release_date: '1980-05-21',
+    director: 'Irvin Kershner',
+    opening_crawl: '',
+    producer: '',
+    characters: [],
+    planets: [],
+    starships: [],
+    vehicles: [],
+    species: [],
+    created: '',
+    edited: '',
+    url: '',
+  },
+];
+
 describe('Store', () => {
   const store = configureStore({
     reducer: {
@@ -22,24 +57,6 @@ describe('Store', () => {
   });
 
   it('should handle setting films', () => {
-    const films: Film[] = [
-      {
-        title: 'A New Hope',
-        episode_id: 4,
-        release_date: '1977-05-25',
-        director: 'George Lucas',
-        opening_crawl: '',
-        producer: '',
-        characters: [],
-        planets: [],
-        starships: [],
-        vehicles: [],
-        species: [],
-        created: '',
-        edited: '',
-        url: '',
-      },
-    ];
     store.dispatch(setFilms(films));
     const state = store.getState().films;
     expect(state.films).toEqual(films);
@@ -47,40 +64,6 @@ describe('Store', () => {
   });
 
   it('should handle filtering films', () => {
-    const films: Film[] = [
-      {
-        title: 'A New Hope',
-        episode_id: 4,
-        release_date: '1977-05-25',
-        director: 'George Lucas',
-        opening_crawl: '',
-        producer: '',
-        characters: [],
-        planets: [],
-        starships: [],
-        vehicles: [],
-        species: [],
-        created: '',
-        edited: '',
-        url: '',
-      },
-      {
-        title: 'The Empire Strikes Back',
-        episode_id: 5,
-        release_date: '1980-05-21',
-        director: 'Irvin Kershner',
-        opening_crawl: '',
-        producer: '',
-        characters: [],
-        planets: [],
-        starships: [],
-        vehicles: [],
-        species: [],
-        created: '',
-        edited: '',
-        url: '',
-      },
-    ];
     store.dispatch(setFilms(films));
     store.dispatch(filterFilms('hope'));
     const state = store.getState().films;
@@ -88,62 +71,12 @@ describe('Store', () => {
   });
 
   it('should handle selecting a film', () => {
-    const film: Film = {
-      title: 'A New Hope',
-      episode_id: 4,
-      release_date: '1977-05-25',
-      director: 'George Lucas',
-      opening_crawl: '',
-      producer: '',
-      characters: [],
-      planets: [],
-      starships: [],
-      vehicles: [],
-      species: [],
-      created: '',
-      edited: '',
-      url: '',
-    };
-    store.dispatch(selectFilm(film));
+    store.dispatch(selectFilm(films[0]));
     const state = store.getState().films;
-    expect(state.selectedFilm).toEqual(film);
+    expect(state.selectedFilm).toEqual(films[0]);
   });
 
   it('should handle sorting films by title', () => {
-    const films: Film[] = [
-      {
-        title: 'The Empire Strikes Back',
-        episode_id: 5,
-        release_date: '1980-05-21',
-        director: 'Irvin Kershner',
-        opening_crawl: '',
-        producer: '',
-        characters: [],
-        planets: [],
-        starships: [],
-        vehicles: [],
-        species: [],
-        created: '',
-        edited: '',
-        url: '',
-      },
-      {
-        title: 'A New Hope',
-        episode_id: 4,
-        release_date: '1977-05-25',
-        director: 'George Lucas',
-        opening_crawl: '',
-        producer: '',
-        characters: [],
-        planets: [],
-        starships: [],
-        vehicles: [],
-        species: [],
-        created: '',
-        edited: '',
-        url: '',
-      },
-    ];
     store.dispatch(setFilms(films));
     store.dispatch(sortFilms('title'));
     const state = store.getState().films;
