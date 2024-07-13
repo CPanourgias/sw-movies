@@ -1,6 +1,7 @@
-import FilmListItem from './FilmListItem';
-import type { Film } from '../types';
+import { Divider, List, ListItemText } from '@mui/material';
+import { format, parseISO } from 'date-fns';
 
+import type { Film } from '../types';
 interface FilmListProps {
   films: Film[];
   onFilmSelect: (film: Film) => void;
@@ -8,15 +9,21 @@ interface FilmListProps {
 
 const FilmList: React.FC<FilmListProps> = ({ films, onFilmSelect }) => {
   return (
-    <div className="flex flex-col w-full">
-      {films.map((film) => (
-        <FilmListItem
-          key={film.episode_id}
-          film={film}
-          onFilmSelect={onFilmSelect}
-        />
-      ))}
-    </div>
+    <List>
+      {films.map((film) => {
+        const { episode_id, title, release_date } = film;
+
+        return (
+          <>
+            <ListItemText
+              onClick={() => onFilmSelect(film)}
+              className="hover:cursor-pointer py-4"
+            >{`Episode ${episode_id} -  ${title} - ${format(parseISO(release_date), 'PP')}`}</ListItemText>
+            <Divider variant="fullWidth" component="li" />
+          </>
+        );
+      })}
+    </List>
   );
 };
 

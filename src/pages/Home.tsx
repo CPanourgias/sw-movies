@@ -18,6 +18,7 @@ import {
   useGetFilmDetailsQuery,
 } from '../features/films/api';
 import type { Film } from '../types';
+import { Container } from '@mui/material';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -65,25 +66,25 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="p-4">
+    <Container className="h-screen p-4">
       <Header />
       <div className="flex items-center mb-4">
         <SearchBar onSearch={handleSearch} />
         <SortDropdown onSortChange={handleSortChange} />
       </div>
-      <div className="flex">
+      <div className="flex gap-8">
         <div className="flex-1">
           <FilmList films={filteredFilms} onFilmSelect={handleFilmSelect} />
         </div>
         <div className="flex-[2] pl-4">
-          {loadingFilmDetails ? (
-            <div>Loading details...</div>
-          ) : (
-            <FilmDetails film={selectedFilm} details={selectedFilmDetails} />
-          )}
+          <FilmDetails
+            film={selectedFilm}
+            details={selectedFilmDetails}
+            isLoadingDetails={loadingFilmDetails}
+          />
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

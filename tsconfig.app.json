@@ -18,13 +18,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./src"
-    // "paths": {
-    //   "types/*": ["types/*"],
-    //   "components/*": ["components/*"],
-    //   "store/*": ["store/*"],
-    //   "api/*": ["api/*"]
-    // }
+    "types": ["vitest/globals"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

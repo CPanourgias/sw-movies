@@ -1,3 +1,4 @@
+import { Box, TextField } from '@mui/material';
 import { useState } from 'react';
 
 interface SearchBarProps {
@@ -14,15 +15,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className="m-4">
-      <input
-        type="text"
+    <Box sx={{ width: '100%' }} display="flex" flexDirection="row">
+      <TextField
         value={query}
         onChange={handleChange}
-        placeholder="Search films..."
-        className="w-full p-2 text-base border border-solid border-[#ccc] rounded-lg"
+        label="Search films..."
+        variant="outlined"
+        sx={{ flex: 4 }}
       />
-    </div>
+    </Box>
   );
 };
 
