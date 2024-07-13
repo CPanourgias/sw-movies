@@ -20,7 +20,7 @@ const useNormalizeRating = () => {
 
   const calculateAverageRating = (ratings: string[]) => {
     const normalizedRatings = ratings.map(normalizeRating);
-    console.log('normalizedRatings', normalizedRatings);
+
     const total = normalizedRatings.reduce((sum, rating) => {
       return sum + rating;
     }, 0);

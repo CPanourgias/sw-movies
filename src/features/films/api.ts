@@ -24,7 +24,7 @@ export const filmsApi = createApi({
     }),
     getFilmDetails: builder.query<FilmDetails, number>({
       query: (episode_id) =>
-        `https://www.omdbapi.com/?apikey=b9a5e69d&t=star+wars+episode+${EPISODES[episode_id - 1]}`,
+        `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}&t=star+wars+episode+${EPISODES[episode_id - 1]}`,
       providesTags: (_result, _error, episode_id) => [
         { type: 'FilmDetails', id: episode_id },
       ],

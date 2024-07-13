@@ -15,7 +15,7 @@ A React application to browse and search Star Wars movies.
 - TypeScript
 - Redux Toolkit
 - Vite
-- CSS Modules
+- Tailwind + MUI
 - Vitest for testing
 
 ## Getting Started
@@ -30,4 +30,11 @@ A React application to browse and search Star Wars movies.
 
 ```bash
 git clone https://github.com/CPanourgias/star-wars-movies-app.git
+```
+
+2. Install dependencies and run the dev server
+
+```bash
+npm install
+npm run dev
 ```

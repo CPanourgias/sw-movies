@@ -29,7 +29,7 @@ describe('filmsApi', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(result.current.data?.results).toHaveLength(2);
-    expect(result.current.data?.results[0].title).toBe('The Phantom Menace');
+    expect(result.current.data?.results[0].title).toBe('A New Hope');
   });
 
   it('fetches film details successfully', async () => {

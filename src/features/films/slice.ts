@@ -27,7 +27,7 @@ export const fetchFilmDetails = createAsyncThunk(
   'films/fetchFilmDetails',
   async (episode_id: number) => {
     const response = await axios.get(
-      `https://www.omdbapi.com/?apikey=b9a5e69d&t=star+wars+episode+${episode_id}`,
+      `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_OMDB_API_KEY}&t=star+wars+episode+${episode_id}`,
     );
     return response.data;
   },
