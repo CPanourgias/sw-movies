@@ -7,6 +7,7 @@ export interface Film {
 }
 
 export interface FilmDetails {
+  Title: string;
   Runtime: string;
   Poster: string;
   Ratings: { Source: string; Value: string }[];
