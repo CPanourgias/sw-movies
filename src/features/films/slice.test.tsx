@@ -20,9 +20,6 @@ describe('filmsSlice', () => {
       films: [],
       filteredFilms: [],
       selectedFilm: null,
-      selectedFilmDetails: null,
-      loadingFilmDetails: false,
-      filmDetailsCache: {},
       sortKey: 'releaseDate',
     });
   });
