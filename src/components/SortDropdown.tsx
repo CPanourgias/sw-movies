@@ -25,6 +25,7 @@ const SortDropdown: React.FC = () => {
       >
         <MenuItem value="title">Title</MenuItem>
         <MenuItem value="releaseDate">Release Date</MenuItem>
+        <MenuItem value="episode">Episode no.</MenuItem>
       </Select>
     </FormControl>
   );

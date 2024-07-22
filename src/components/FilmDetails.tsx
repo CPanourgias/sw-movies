@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   Avatar,
   Card,
@@ -21,7 +22,7 @@ interface FilmDetailsProps {
 
 const icons = ['imdb', 'rotten-tomatoes', 'metascore'];
 
-const FilmSideBar: React.FC<FilmDetailsProps> = ({ film }) => {
+const FilmSideBar: React.FC<FilmDetailsProps> = memo(({ film }) => {
   const { calculateAverageRating } = useNormalizeRating();
   const { data, isLoading, error } = useGetFilmDetailsQuery(
     film.episode_id ?? 0,
@@ -39,10 +40,18 @@ const FilmSideBar: React.FC<FilmDetailsProps> = ({ film }) => {
     }
 
     if (error || !data) {
+      if (error) {
+        return (
+          <div>
+            {error.status} {JSON.stringify(error.data)}
+          </div>
+        );
+      }
+
       return (
         <Typography>
-          There seems to be an error. Try selecting another film or refresh the
-          page
+          There seems to be an error fetching data. Try selecting another film
+          or refresh the page
         </Typography>
       );
     }
@@ -122,6 +131,6 @@ const FilmSideBar: React.FC<FilmDetailsProps> = ({ film }) => {
       <CardContent>{renderCardContent()}</CardContent>
     </Card>
   );
-};
+});
 
 export default FilmSideBar;

@@ -43,6 +43,13 @@ const Home: React.FC = () => {
     }
 
     if (error || !data) {
+      if (error) {
+        return (
+          <div>
+            {error.status} {JSON.stringify(error.data)}
+          </div>
+        );
+      }
       return (
         <Typography textAlign="center">
           There was an error loading data, please refresh the page
